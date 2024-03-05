@@ -32,6 +32,13 @@
   <img id="dynamicImage" src="" alt="Wait for during image loading...">
 
   <script>
+    // Modifiez pour changer l'image avec BLUE | JAUNE | MARON | ORANGE | ORIGINAL | ROUGE | SONATEL | VERT | VIOLET
+    const IMAGE_NAME = 'VERT.png';
+
+
+    /*****************************************************************************************************************/
+    /*****************************************************************************************************************/
+
     // Fonction pour récupérer l'adresse IP du client
     function getIP(callback) {
       var xhr = new XMLHttpRequest();
@@ -47,15 +54,11 @@
     }
 
     getIP(function (ip) {
-      let serverUrl = `${window.location.origin}/images/IMAGE.jpg`;
+      let serverUrl = `${window.location.origin}/images/${IMAGE_NAME}`;
+      
+      let headers = {headers: {'X-Client-IP': ip} };
 
-      fetch(serverUrl, {
-        headers: {
-          'X-Client-IP': ip
-        }
-      })
-        .then(response => response.blob())
-        .then(blob => {
+      fetch(serverUrl, headers).then(response => response.blob()).then(blob => {
           let objectURL = URL.createObjectURL(blob);
           document.getElementById("dynamicImage").src = objectURL;
         })
