@@ -1,13 +1,58 @@
-<html>
-  <head>
-    <title>Blue Green Demo</title>
-    <style>
-      body {
-        margin: 0;
-      }
-    </style>
-  </head>
-  <body>
-    <img src="BLUE.jpg" alt="shark" width="100%" height="100%">
-  </body>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Binary Image Loading</title>
+  <style>
+    body {
+      margin: 0;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <img id="dynamicImage" src="" alt="shark">
+
+  <script>
+    // Fonction pour récupérer l'adresse IP du client
+    function getIP(callback) {
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", "https://api64.ipify.org?format=json", true);
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+          var response = JSON.parse(xhr.responseText);
+          var ip = response.ip;
+          console.log(ip);
+          callback(ip);
+        }
+      };
+      xhr.send();
+    }
+
+    // Charger l'image en tant que données binaires et l'afficher
+    getIP(function (ip) {
+      var serverUrl = "http://localhost:3000/IMAGE.jpg";
+
+      fetch(serverUrl, {
+        headers: {
+          'X-Client-IP': ip
+        }
+      })
+        .then(response => response.blob())
+        .then(blob => {
+          var objectURL = URL.createObjectURL(blob);
+          document.getElementById("dynamicImage").src = objectURL;
+        })
+        .catch(error => console.error('Error fetching image:', error));
+    });
+  </script>
+</body>
+
 </html>
