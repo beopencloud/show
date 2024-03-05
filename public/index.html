@@ -38,18 +38,16 @@
       xhr.open("GET", "https://api64.ipify.org?format=json", true);
       xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {
-          var response = JSON.parse(xhr.responseText);
-          var ip = response.ip;
-          console.log(ip);
+          let response = JSON.parse(xhr.responseText);
+          let ip = response.ip;
           callback(ip);
         }
       };
       xhr.send();
     }
 
-    // Charger l'image en tant que données binaires et l'afficher
     getIP(function (ip) {
-      var serverUrl = "http://localhost:3000/IMAGE.jpg";
+      let serverUrl = `${window.location.origin}/images/IMAGE.jpg`;
 
       fetch(serverUrl, {
         headers: {
@@ -58,7 +56,7 @@
       })
         .then(response => response.blob())
         .then(blob => {
-          var objectURL = URL.createObjectURL(blob);
+          let objectURL = URL.createObjectURL(blob);
           document.getElementById("dynamicImage").src = objectURL;
         })
         .catch(error => console.error('Error fetching image:', error));
