@@ -1,14 +1,22 @@
-FROM node:18.16.0-alpine3.17
-WORKDIR /app
-COPY package*.json .
+#!/bin/bash
+
+#nodejs
+FROM --platform=linux/amd64 node:18
+
+# Create app directory
+WORKDIR /usr/src/app
+
+# Install app dependencies
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+# where available (npm@5+)
+COPY package*.json ./
+
 RUN npm install
+# If you are building your code for production
+# RUN npm ci --only=production
+
+# Bundle app source
 COPY . .
+
 EXPOSE 3000
-
-# Ajuster les autorisations sur le répertoire de travail de manière récursive
-RUN chmod -R 777 /app
-
-# Définir l'utilisateur pour l'exécution de l'application
-USER node
-
-CMD ["npm", "start"]
+CMD [ "node", "index.js" ]
