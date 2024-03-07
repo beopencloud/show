@@ -41,7 +41,7 @@
 
     let serverUrl = `${window.location.origin}/images/${IMAGE_NAME}`;
 
-    let headers = { headers: { 'version': "v3" } };
+    let headers = { headers: { 'version': "v4" } };
 
     fetch(serverUrl, headers).then(response => response.blob()).then(blob => {
       let objectURL = URL.createObjectURL(blob);
