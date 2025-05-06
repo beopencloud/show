@@ -1,5 +1,3 @@
-#!/bin/bash
-
 #nodejs
 FROM --platform=linux/amd64 node:18
 
